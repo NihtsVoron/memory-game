@@ -18,7 +18,7 @@ cards.forEach(card => {
                     return;
 
             if (openCardsTurn.length==2)
-                CloseFlippedCards();
+                return;
 
             card.classList.toggle('flipped');
             openCardsTurn.push(card);
