@@ -1,5 +1,13 @@
 :root{
     --color-background-page: #f0f0f0;
+    --color-card-back: #bebebe;
+    --color-card-back-hover: #868686;
+    --color-card-flipped: #4CAF50;
+    --color-card-open: #2e86c0;
+    --color-button: #f18aa1;
+    --color-button-hover: #f1496e;
+    --color-button-text: #2c2c2c;
+    --color-button-text-hover: #b6c3d3;
 }
 
 * {
@@ -26,10 +34,11 @@ body {
     justify-content: center;
 }
 
-header{
+.game-header{
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin: 20px;
 }
 
 h1 {
@@ -42,18 +51,75 @@ h1 {
     grid-gap: 10px;
 }
 
+.scores
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 100px;
+    padding: 10px;
+}
+
+.game-buttons
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 100px;
+    padding: 10px;
+}
+
+.button {
+    background-color: var(--color-button);
+    line-height: 32px;
+    align-items: center;
+    padding: 5px 10px;
+    border-radius: 15px;
+    text-align: center;
+    width: 100px;
+    color: var(--color-button-text);
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+}
+
+.button:hover {
+    background-color: var(--color-button-hover);
+    color: var(--color-button-text-hover);
+}
+
 .card {
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    background-color: var(--color-card-back);
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 24px;
     cursor: pointer;
+    width: 100px;
+    height: 100px;
+    border-radius: 10px;
+    transition: all 0.3s ease-in-out;
+}
+
+.card > *
+{
+    opacity: 0;
+    transition: all 0.3s ease-in-out;
+}
+
+.card:hover{
+    background-color: var(--color-card-back-hover);
 }
 
 .card.flipped {
-    background-color: #4CAF50;
-    color: white;
+    background-color: var(--color-card-flipped);
+}
+
+.card.open {
+    background-color: var(--color-card-open);
+}
+
+.card.flipped > *, .card.open > *
+{
+    opacity: 1;
 }

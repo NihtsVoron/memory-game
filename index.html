@@ -7,31 +7,70 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="wrapper">
-    <header>
+    <header class="game-header">
         <h1>Memory Game</h1>
         <p>Уважаемый ревьюер! Надеюсь к концу проверки ты сможешь поиграть в мою игру!</p>
         <p>Прошу дать мне немного времени</p>
-        <br>
+        <div class="game-buttons">
+            <div class="start button">Старт</div>
+            <div class="leaders button">Лидеры</div>
+        </div>
+        <div class="scores">
+            <div class="turns">Ход: <span id = "turn-count">0</span></div>
+            <div class="points">Очки: <span id = "point-count">0</span></div>
+        </div>
     </header>
 
     <main>
         <div class="game-container">
-            <div class="card" data-card="A">A</div>
-            <div class="card" data-card="B">B</div>
-            <div class="card" data-card="C">C</div>
-            <div class="card" data-card="D">D</div>
-            <div class="card" data-card="A">A</div>
-            <div class="card" data-card="B">B</div>
-            <div class="card" data-card="C">C</div>
-            <div class="card" data-card="D">D</div>
-            <div class="card" data-card="E">E</div>
-            <div class="card" data-card="F">F</div>
-            <div class="card" data-card="G">G</div>
-            <div class="card" data-card="H">H</div>
-            <div class="card" data-card="I">I</div>
-            <div class="card" data-card="J">J</div>
-            <div class="card" data-card="K">K</div>
-            <div class="card" data-card="L">L</div>
+            <div class="card" data-card="1">
+                <span>1</span>
+            </div>
+            <div class="card" data-card="2">
+                <span>2</span>
+            </div>
+            <div class="card" data-card="3">
+                <span>3</span>
+            </div>
+            <div class="card" data-card="4">
+                <span>4</span>
+            </div>
+            <div class="card" data-card="5">
+                <span>5</span>
+            </div>
+            <div class="card" data-card="6">
+                <span>6</span>
+            </div>
+            <div class="card" data-card="7">
+                <span>7</span>
+            </div>
+            <div class="card" data-card="8">
+                <span>8</span>
+            </div>
+            <div class="card" data-card="1">
+                <span>1</span>
+            </div>
+            <div class="card" data-card="2">
+                <span>2</span>
+            </div>
+            <div class="card" data-card="3">
+                <span>3</span>
+            </div>
+            <div class="card" data-card="4">
+                <span>4</span>
+            </div>
+            <div class="card" data-card="5">
+                <span>5</span>
+            </div>
+            <div class="card" data-card="6">
+                <span>6</span>
+            </div>
+            <div class="card" data-card="7">
+                <span>7</span>
+            </div>
+            <div class="card" data-card="8">
+                <span>8</span>
+            </div>
         </div>
     </main>
     <script src="game.js"></script>
