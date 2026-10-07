@@ -1,13 +1,13 @@
-const cards = document.querySelectorAll(".card");
+let cards;
 let openCardsTurn = [];
 let turns = 0;
 let points = 0;
 
-const turnCount = document.querySelector("#turn-count");
-const pointCount = document.querySelector("#point-count");
+let turnCount;
+let pointCount;
+let startButton;
 
-const startButton = document.querySelector(".start");
-
+LoadGame();
 StartGame();
 
 cards.forEach(card => {
@@ -104,4 +104,41 @@ function StartGame() {
 
 function getRandomInt(max) {
   return Math.floor(Math.random() * max);
+}
+
+function LoadGame() {
+    const headerItem = document.createElement('header');
+      headerItem.className = 'game-header';
+      headerItem.innerHTML = `
+        <h1>Memory Game</h1>
+        <p>Уважаемый ревьюер! Надеюсь к концу проверки ты сможешь поиграть в мою игру!</p>
+        <p>Прошу дать мне немного времени</p>
+        <div class="game-buttons">
+            <div class="start button">Новая игра</div>
+            <div class="leaders button">Лидеры</div>
+        </div>
+        <div class="scores">
+            <div class="turns">Ход: <span id = "turn-count">0</span></div>
+            <div class="points">Очки: <span id = "point-count">0</span></div>
+        </div>`;
+
+        document.body.append(headerItem);
+        turnCount = document.querySelector("#turn-count");
+        pointCount = document.querySelector("#point-count");
+        startButton = document.querySelector(".start");
+
+        let mainSection = document.createElement('main');
+
+        document.body.append(mainSection);
+        let gameContainer = document.createElement('div');
+        gameContainer.className = 'game-container';
+        mainSection.append(gameContainer);
+
+        for (let index = 0; index < 16; index++) {
+            let card = document.createElement('div');
+            card.className = 'card';
+            gameContainer.append(card);
+        }
+
+        cards = document.querySelectorAll(".card");
 }
