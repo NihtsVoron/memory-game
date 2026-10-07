@@ -8,6 +8,8 @@ const pointCount = document.querySelector("#point-count");
 
 const startButton = document.querySelector(".start");
 
+StartGame();
+
 cards.forEach(card => {
     card.addEventListener('click', (e) => {
         {
@@ -65,9 +67,41 @@ function StartGame() {
     points=0;
     pointCount.innerHTML = points;
 
+    let items = [];
+
+    for (let index = 0; index < 16; index++) {
+        items.push(index);
+    }
+
+    for (let index = 0; index < 7; index++) {
+        let randomIndex = getRandomInt(items.length);
+        cards[items[randomIndex]].dataset.card = index;
+        cards[items[randomIndex]].innerHTML = `
+          <span>${index}</span>
+        `;
+        items.splice(randomIndex, 1);
+        randomIndex = getRandomInt(items.length);
+        cards[items[randomIndex]].dataset.card = index;
+        cards[items[randomIndex]].innerHTML = `
+          <span>${index}</span>
+        `;
+        items.splice(randomIndex, 1);
+    }
+
+    items.forEach(item=>
+    {
+        cards[item].dataset.card=7;
+        cards[item].innerHTML = `
+          <span>${7}</span>
+        `;
+    });
+
     cards.forEach(card =>{
         card.classList.remove('flipped');
         card.classList.remove('open');
     })
+}
 
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
 }

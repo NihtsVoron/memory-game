@@ -53,13 +53,12 @@ h1 {
 
 .scores
 {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    gap: 100px;
+    display: grid;
+    grid-template-columns: repeat(2, 100px);
+    grid-gap: 100px;
     padding: 10px;
+    text-align: center
 }
-
 .game-buttons
 {
     display: flex;
