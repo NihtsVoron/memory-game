@@ -59,6 +59,7 @@ h1 {
     padding: 10px;
     text-align: center
 }
+
 .game-buttons
 {
     display: flex;
@@ -121,4 +122,39 @@ h1 {
 .card.flipped > *, .card.open > *
 {
     opacity: 1;
+}
+
+.game-result {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 300px;
+    width: 400px;
+    border-radius: 40px;
+    background: var(--color-background-page);
+    margin: 16px;
+}
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+
+    opacity: 1;
+    transition: opacity 0.3s, visibility 0.3s;
+}
+
+.game-result-buttons
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 100px;
+    padding: 20px 10px;
 }
