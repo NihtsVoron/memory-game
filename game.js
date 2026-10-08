@@ -30,7 +30,7 @@ cards.forEach(card => {
             if (openCardsTurn.length == 2)
             {
                 turns++;
-                turnCount.innerHTML = turns;
+                turnCount.textContent = turns;
 
                 if (openCardsTurn.every(x => x.dataset.card == openCardsTurn[0].dataset.card))
                 {
@@ -40,7 +40,7 @@ cards.forEach(card => {
 
                     CloseFlippedCards();
                     points++;
-                    pointCount.innerHTML=points;
+                    pointCount.textContent=points;
                     CheckEndGame();
                     return;
                 }
@@ -68,9 +68,9 @@ startButton.addEventListener('click', (e) => {
 function StartGame() {
     openCardsTurn=[];
     turns=0;
-    turnCount.innerHTML = turns;
+    turnCount.textContent = turns;
     points=0;
-    pointCount.innerHTML = points;
+    pointCount.textContent = points;
 
     let items = [];
 
@@ -81,24 +81,25 @@ function StartGame() {
     for (let index = 0; index < 7; index++) {
         let randomIndex = getRandomInt(items.length);
         cards[items[randomIndex]].dataset.card = index;
-        cards[items[randomIndex]].innerHTML = `
-          <span>${index}</span>
-        `;
+        let cardSpan = document.createElement('span');
+        cardSpan.textContent = index;
+        cards[items[randomIndex]].replaceChildren(cardSpan);
+
         items.splice(randomIndex, 1);
         randomIndex = getRandomInt(items.length);
         cards[items[randomIndex]].dataset.card = index;
-        cards[items[randomIndex]].innerHTML = `
-          <span>${index}</span>
-        `;
+        cardSpan = document.createElement('span');
+        cardSpan.textContent = index;
+        cards[items[randomIndex]].replaceChildren(cardSpan);
         items.splice(randomIndex, 1);
     }
 
     items.forEach(item=>
     {
         cards[item].dataset.card=7;
-        cards[item].innerHTML = `
-          <span>${7}</span>
-        `;
+        let cardSpan = document.createElement('span');
+        cardSpan.textContent = 7;
+        cards[item].replaceChildren(cardSpan);
     });
 
     cards.forEach(card =>{
@@ -113,38 +114,63 @@ function getRandomInt(max) {
 
 function LoadGame() {
     const headerItem = document.createElement('header');
-      headerItem.className = 'game-header';
-      headerItem.innerHTML = `
-        <h1>Memory Game</h1>
-        <div class="game-buttons">
-            <div class="start button">Новая игра</div>
-            <div class="leaders button">Лидеры</div>
-        </div>
-        <div class="scores">
-            <div class="turns">Ход: <span id = "turn-count">0</span></div>
-            <div class="points">Очки: <span id = "point-count">0</span></div>
-        </div>`;
+    headerItem.className = 'game-header';
 
-        document.body.append(headerItem);
-        turnCount = document.querySelector("#turn-count");
-        pointCount = document.querySelector("#point-count");
-        startButton = document.querySelector(".start");
-        leadersButton = document.querySelector(".leaders");
+    let h1 = document.createElement('h1');
+    h1.textContent ='Memory Game';
+    headerItem.append(h1);
 
-        let mainSection = document.createElement('main');
+    let gameButtons = document.createElement('div');
+    gameButtons.className = 'game-buttons';
+    headerItem.append(gameButtons);
 
-        document.body.append(mainSection);
-        let gameContainer = document.createElement('div');
-        gameContainer.className = 'game-container';
-        mainSection.append(gameContainer);
+    startButton = document.createElement('div');
+    startButton.className = 'start button';
+    startButton.textContent ='Новая игра';
+    gameButtons.append(startButton);
 
-        for (let index = 0; index < 16; index++) {
-            let card = document.createElement('div');
-            card.className = 'card';
-            gameContainer.append(card);
-        }
+    leadersButton = document.createElement('div');
+    leadersButton.className = 'leaders button';
+    leadersButton.textContent ='Лидеры';
+    gameButtons.append(leadersButton);
 
-        cards = document.querySelectorAll(".card");
+    let scores = document.createElement('div');
+    scores.className = 'scores';
+    headerItem.append(scores);
+
+    turnDiv = document.createElement('div');
+    turnDiv.className = 'turns';
+    turnDiv.textContent ='Ход: ';
+    scores.append(turnDiv);
+
+    pointDiv = document.createElement('div');
+    pointDiv.className = 'points';
+    pointDiv.textContent ='Очки: ';
+    scores.append(pointDiv);
+
+    turnCount = document.createElement('span');
+    turnCount.id ='turn-count';
+    turnDiv.append(turnCount);
+
+    pointCount = document.createElement('span');
+    pointCount.id ='turn-count';
+    pointDiv.append(pointCount);
+    document.body.append(headerItem);
+
+    let mainSection = document.createElement('main');
+
+    document.body.append(mainSection);
+    let gameContainer = document.createElement('div');
+    gameContainer.className = 'game-container';
+    mainSection.append(gameContainer);
+
+    for (let index = 0; index < 16; index++) {
+        let card = document.createElement('div');
+        card.className = 'card';
+        gameContainer.append(card);
+    }
+
+    cards = document.querySelectorAll(".card");
 }
 
 function CheckEndGame() {
@@ -152,20 +178,35 @@ function CheckEndGame() {
     return;
 
     modalResult = document.createElement('div');
-      modalResult.className = 'modal-overlay';
-      modalResult.innerHTML = `
-        <div class="game-result">
-            <h1>Конец игры!</h1>
-            <h2 class="game-result-turns">Сделано ходов - ${turns}</h2>
-            <div class="game-result-buttons">
-                <div class="start-result button">Новая игра</div>
-                <div class="close-result button">Закрыть</div>
-            </div>
-        </div>`;
+    modalResult.className = 'modal-overlay';
+
+    let gameResult = document.createElement('div');
+    gameResult.className = 'game-result';
+    modalResult.append(gameResult);
+
+    let h1 = document.createElement('h1');
+    h1.textContent ='Конец игры!';
+    gameResult.append(h1);
+
+    let h2 = document.createElement('h2');
+    h2.textContent =`Сделано ходов - ${turns}`;
+    gameResult.append(h2);
+
+    let gameResultButtons = document.createElement('div');
+    gameResultButtons.className = 'game-result-buttons';
+    gameResult.append(gameResultButtons);
+
+    startResultButton = document.createElement('div');
+    startResultButton.className = 'start-result button';
+    startResultButton.textContent ='Новая игра';
+    gameResultButtons.append(startResultButton);
+
+    closeResultButton = document.createElement('div');
+    closeResultButton.className = 'close-result button';
+    closeResultButton.textContent ='Закрыть';
+    gameResultButtons.append(closeResultButton);
 
     document.body.append(modalResult);
-    let startResultButton = document.querySelector(".start-result");
-    let closeResultButton = document.querySelector(".close-result");
 
     startResultButton.addEventListener('click', (e) => {
         modalResult.remove();
@@ -193,30 +234,57 @@ function CheckEndGame() {
 leadersButton.addEventListener('click', (e) => {
     leaders = JSON.parse(localStorage.getItem('leaders')) || [];
     modalResult = document.createElement('div');
-      modalResult.className = 'modal-overlay';
-      modalResult.innerHTML = `
-        <div class="leaders-result">
-            <h1>Таблица лидеров</h1>
-            <div class="leaders-list">
-                ${leaders.length
-                ? leaders.sort(compareLeaders).slice(0, 10).map((leader, i) => `
-                    <div class="leader-row">
-                    <span>${i + 1}.</span>
-                    <span>Ходов: ${leader.turns}</span>
-                    <span>${new Date(leader.date).toLocaleDateString('ru-RU')}</span>
-                    </div>
-                `).join('')
-                : '<p>Пока нет результатов</p>'}
-            </div>
-            <div class="game-leaders-buttons">
-                <div class="close-leaders button">Закрыть</div>
-            </div>
-        </div>`;
+    modalResult.className = 'modal-overlay';
+
+    let leadersResult = document.createElement('div');
+    leadersResult.className = 'leaders-result';
+    modalResult.append(leadersResult);
+
+    let h1 = document.createElement('h1');
+    h1.textContent = 'Таблица лидеров';
+    leadersResult.append(h1);
+
+    let leadersList = document.createElement('div');
+    leadersList.className = 'leaders-list';
+    leadersResult.append(leadersList);
+
+    if (leaders.length) {
+        leaders.sort(compareLeaders).slice(0, 10).forEach((leader, i) => {
+            let leaderRow = document.createElement('div');
+            leaderRow.className = 'leader-row';
+            leadersList.append(leaderRow);
+
+            let numberSpan = document.createElement('span');
+            numberSpan.textContent = `${i + 1}.`;
+            leaderRow.append(numberSpan);
+
+            let turnsSpan = document.createElement('span');
+            turnsSpan.textContent = `Ходов: ${leader.turns}`;
+            leaderRow.append(turnsSpan);
+
+            let dateSpan = document.createElement('span');
+            dateSpan.textContent = new Date(leader.date).toLocaleDateString('ru-RU');
+            leaderRow.append(dateSpan);
+        });
+    } else {
+        let emptyText = document.createElement('p');
+        emptyText.textContent = 'Пока нет результатов';
+        leadersList.append(emptyText);
+    }
+
+    let gameLeadersButtons = document.createElement('div');
+    gameLeadersButtons.className = 'game-leaders-buttons';
+    leadersResult.append(gameLeadersButtons);
+
+    let closeLeadersButton = document.createElement('div');
+    closeLeadersButton.className = 'close-leaders button';
+    closeLeadersButton.textContent = 'Закрыть';
+    gameLeadersButtons.append(closeLeadersButton);
+
+    document.body.append(modalResult);
 
     document.body.append(modalResult);
     leaders = JSON.parse(localStorage.getItem('leaders')) || [];
-
-    let closeLeadersButton = document.querySelector(".close-leaders");
 
     closeLeadersButton.addEventListener('click', (e) => {
         modalResult.remove();
