@@ -1,0 +1,199 @@
+:root{
+    --color-background-page: #f0f0f0;
+    --color-card-back: #bebebe;
+    --color-card-back-hover: #868686;
+    --color-card-flipped: #4CAF50;
+    --color-card-open: #2e86c0;
+    --color-button: #f18aa1;
+    --color-button-hover: #f1496e;
+    --color-button-text: #2c2c2c;
+    --color-button-text-hover: #b6c3d3;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+html {
+    scroll-behavior: smooth;
+    background-color: var(--color-background-page);
+}
+
+a{
+    text-decoration: none;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.game-header{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+}
+
+h1 {
+    margin: 20px 0;
+}
+
+.game-container {
+    display: grid;
+    grid-template-columns: repeat(4, 100px);
+    grid-gap: 10px;
+}
+
+.scores
+{
+    display: grid;
+    grid-template-columns: repeat(2, 100px);
+    grid-gap: 100px;
+    padding: 10px;
+    text-align: center
+}
+
+.game-buttons
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 100px;
+    padding: 10px;
+}
+
+.button {
+    background-color: var(--color-button);
+    line-height: 32px;
+    align-items: center;
+    padding: 5px 10px;
+    border-radius: 15px;
+    text-align: center;
+    width: 100px;
+    color: var(--color-button-text);
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+}
+
+.button:hover {
+    background-color: var(--color-button-hover);
+    color: var(--color-button-text-hover);
+}
+
+.card {
+    background-color: var(--color-card-back);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    cursor: pointer;
+    width: 100px;
+    height: 100px;
+    border-radius: 10px;
+    transition: all 0.3s ease-in-out;
+}
+
+.card > *
+{
+    opacity: 0;
+    transition: all 0.3s ease-in-out;
+}
+
+.card:hover{
+    background-color: var(--color-card-back-hover);
+}
+
+.card.flipped {
+    background-color: var(--color-card-flipped);
+}
+
+.card.open {
+    background-color: var(--color-card-open);
+}
+
+.card.flipped > *, .card.open > *
+{
+    opacity: 1;
+}
+
+.game-result {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 300px;
+    width: 400px;
+    border-radius: 40px;
+    background: var(--color-background-page);
+    margin: 16px;
+}
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+
+    opacity: 1;
+    transition: opacity 0.3s, visibility 0.3s;
+}
+
+.game-result-buttons
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 100px;
+    padding: 20px 10px;
+}
+
+.leaders-result {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 400px;
+    border-radius: 40px;
+    background: var(--color-background-page);
+    margin: 16px;
+    gap: 10px;
+    padding: 40px;
+}
+
+.leaders-list{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-self: stretch;
+    padding: 0px 40px;
+}
+
+.leader-row{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.leader-row span:nth-child(2) {
+    margin-right: auto;
+}
+
+.leader-row span:first-child {
+    width: 20px;
+    text-align: right;
+    flex-shrink: 0;
+}
