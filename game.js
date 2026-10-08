@@ -6,6 +6,7 @@ let points = 0;
 let turnCount;
 let pointCount;
 let startButton;
+let modalResult;
 
 LoadGame();
 StartGame();
@@ -37,6 +38,7 @@ cards.forEach(card => {
                     CloseFlippedCards();
                     points++;
                     pointCount.innerHTML=points;
+                    CheckEndGame();
                     return;
                 }
 
@@ -141,4 +143,35 @@ function LoadGame() {
         }
 
         cards = document.querySelectorAll(".card");
+}
+
+function CheckEndGame() {
+  if (points!=8)
+    return;
+
+    modalResult = document.createElement('div');
+      modalResult.className = 'modal-overlay';
+      modalResult.innerHTML = `
+        <div class="game-result">
+            <h1>Конец игры!</h1>
+            <h2 class="game-result-turns">Сделано ходов - ${turns}</h2>
+            <div class="game-result-buttons">
+                <div class="start-result button">Новая игра</div>
+                <div class="close-result button">Закрыть</div>
+            </div>
+        </div>`;
+
+        document.body.append(modalResult);
+        let startResultButton = document.querySelector(".start-result");
+        let closeResultButton = document.querySelector(".close-result");
+
+        startResultButton.addEventListener('click', (e) => {
+            modalResult.remove();
+            StartGame();
+        });
+
+        closeResultButton.addEventListener('click', (e) => {
+            modalResult.remove();
+        });
+
 }
