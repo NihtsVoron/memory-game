@@ -3,10 +3,13 @@ let openCardsTurn = [];
 let turns = 0;
 let points = 0;
 
+let leaders = [];
+
 let turnCount;
 let pointCount;
 let startButton;
 let modalResult;
+let leadersButton;
 
 LoadGame();
 StartGame();
@@ -113,8 +116,6 @@ function LoadGame() {
       headerItem.className = 'game-header';
       headerItem.innerHTML = `
         <h1>Memory Game</h1>
-        <p>Уважаемый ревьюер! Надеюсь к концу проверки ты сможешь поиграть в мою игру!</p>
-        <p>Прошу дать мне немного времени</p>
         <div class="game-buttons">
             <div class="start button">Новая игра</div>
             <div class="leaders button">Лидеры</div>
@@ -128,6 +129,7 @@ function LoadGame() {
         turnCount = document.querySelector("#turn-count");
         pointCount = document.querySelector("#point-count");
         startButton = document.querySelector(".start");
+        leadersButton = document.querySelector(".leaders");
 
         let mainSection = document.createElement('main');
 
@@ -161,17 +163,88 @@ function CheckEndGame() {
             </div>
         </div>`;
 
-        document.body.append(modalResult);
-        let startResultButton = document.querySelector(".start-result");
-        let closeResultButton = document.querySelector(".close-result");
+    document.body.append(modalResult);
+    let startResultButton = document.querySelector(".start-result");
+    let closeResultButton = document.querySelector(".close-result");
 
-        startResultButton.addEventListener('click', (e) => {
-            modalResult.remove();
-            StartGame();
-        });
+    startResultButton.addEventListener('click', (e) => {
+        modalResult.remove();
+        StartGame();
+    });
 
-        closeResultButton.addEventListener('click', (e) => {
-            modalResult.remove();
-        });
+    closeResultButton.addEventListener('click', (e) => {
+        modalResult.remove();
+    });
 
+    modalResult.addEventListener('click', (e) => {
+        modalResult.remove();
+    });
+
+    leaders = JSON.parse(localStorage.getItem('leaders')) || [];
+    let leader = {turns: turns, date: Date.now()};
+
+
+    leaders.push(leader);
+    leaders = leaders.sort(compareLeaders).slice(0, 10);
+
+    localStorage.setItem('leaders',  JSON.stringify(leaders));
 }
+
+leadersButton.addEventListener('click', (e) => {
+    leaders = JSON.parse(localStorage.getItem('leaders')) || [];
+    modalResult = document.createElement('div');
+      modalResult.className = 'modal-overlay';
+      modalResult.innerHTML = `
+        <div class="leaders-result">
+            <h1>Таблица лидеров</h1>
+            <div class="leaders-list">
+                ${leaders.length
+                ? leaders.sort(compareLeaders).slice(0, 10).map((leader, i) => `
+                    <div class="leader-row">
+                    <span>${i + 1}.</span>
+                    <span>Ходов: ${leader.turns}</span>
+                    <span>${new Date(leader.date).toLocaleDateString('ru-RU')}</span>
+                    </div>
+                `).join('')
+                : '<p>Пока нет результатов</p>'}
+            </div>
+            <div class="game-leaders-buttons">
+                <div class="close-leaders button">Закрыть</div>
+            </div>
+        </div>`;
+
+    document.body.append(modalResult);
+    leaders = JSON.parse(localStorage.getItem('leaders')) || [];
+
+    let closeLeadersButton = document.querySelector(".close-leaders");
+
+    closeLeadersButton.addEventListener('click', (e) => {
+        modalResult.remove();
+    });
+
+    modalResult.addEventListener('click', (e) => {
+        modalResult.remove();
+    });
+});
+
+function compareLeaders(a, b) {
+  if (a.turns < b.turns) {
+    return -1
+  }
+  if (a.turns > b.turns) {
+    return 1
+  }
+
+  if (a.date > b.date)
+    return -1;
+
+  if (a.date < b.date)
+    return 1;
+
+  return 0
+}
+
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape' && modalResult!=null)
+    modalResult.remove();
+});

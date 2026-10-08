@@ -158,3 +158,42 @@ h1 {
     gap: 100px;
     padding: 20px 10px;
 }
+
+.leaders-result {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 400px;
+    border-radius: 40px;
+    background: var(--color-background-page);
+    margin: 16px;
+    gap: 10px;
+    padding: 40px;
+}
+
+.leaders-list{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-self: stretch;
+    padding: 0px 40px;
+}
+
+.leader-row{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.leader-row span:nth-child(2) {
+    margin-right: auto;
+}
+
+.leader-row span:first-child {
+    width: 20px;
+    text-align: right;
+    flex-shrink: 0;
+}
